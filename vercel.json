@@ -5,9 +5,9 @@
   "framework": null,
   "trailingSlash": true,
   "redirects": [
-    { "source": "/pdp-product-overview/:path*", "destination": "/cro-005-pdp-product-overview/:path*", "permanent": false },
-    { "source": "/shop-by-scent/:path*", "destination": "/cro-017-shop-by-scent/:path*", "permanent": false },
-    { "source": "/shop-by-goal/:path*", "destination": "/cro-021-homepage-guided-shopping/:path*", "permanent": false }
+    { "source": "/pdp-product-overview/:path(.*)", "destination": "/cro-005-pdp-product-overview/:path", "permanent": false },
+    { "source": "/shop-by-scent/:path(.*)", "destination": "/cro-017-shop-by-scent/:path", "permanent": false },
+    { "source": "/shop-by-goal/:path(.*)", "destination": "/cro-021-homepage-guided-shopping/:path", "permanent": false }
   ],
   "headers": [
     {
