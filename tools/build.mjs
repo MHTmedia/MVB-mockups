@@ -19,8 +19,9 @@ import path from "node:path";
 import zlib from "node:zlib";
 import crypto from "node:crypto";
 import { execFileSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 
-const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = path.join(ROOT, "public");
 const EXPORTS = path.join(ROOT, "_exports");
 const PAGES = path.join(ROOT, "pages");
@@ -139,8 +140,17 @@ function buildExport(file, slug) {
   return { tpl, cssHref, resources, title: labelMatch ? labelMatch[1] : null };
 }
 
+const SMALL_WORDS = new Set(["a", "an", "and", "by", "for", "in", "of", "on", "or", "the", "to", "vs", "with"]);
+const ACRONYMS = new Set(["atc", "cta", "faq", "pdp", "plp", "ugc", "ui", "ux"]);
 function titleCase(slug) {
-  return slug.split("-").map((w) => w[0].toUpperCase() + w.slice(1)).join(" ");
+  return slug.split("-").map((w, i) =>
+    ACRONYMS.has(w) ? w.toUpperCase() : i && SMALL_WORDS.has(w) ? w : w[0].toUpperCase() + w.slice(1)).join(" ");
+}
+
+// cro-017-shop-by-scent -> "CRO-017 | Shop by Scent"
+function croTitle(slug) {
+  const m = slug.match(/^cro-(\d+)-(.+)$/);
+  return m ? `CRO-${m[1]} | ${titleCase(m[2])}` : null;
 }
 
 function renderIndex(list) {
@@ -208,7 +218,7 @@ if (cssVersions.length) {
 for (const b of built) {
   const o = overrides[b.slug] || {};
   if (o.hidden) { fs.rmSync(path.join(OUT, b.slug), { recursive: true, force: true }); continue; }
-  const title = o.title || b.title || titleCase(b.slug);
+  const title = o.title || croTitle(b.slug) || b.title || titleCase(b.slug);
   if (b.tpl != null) {
     const head = [
       `<title>${esc(title)} | ${esc(SITE_NAME)}</title>`,
@@ -236,7 +246,7 @@ if (fs.existsSync(PAGES)) {
     fs.cpSync(path.join(PAGES, d.name), path.join(OUT, d.name), { recursive: true });
     const idx = path.join(PAGES, d.name, "index.html");
     const t = fs.existsSync(idx) && fs.readFileSync(idx, "utf8").match(/<title>([^<|]+)/);
-    list.push({ slug: d.name, title: o.title || (t && t[1].trim()) || titleCase(d.name), desc: o.desc || "", updated: gitDate(path.join(PAGES, d.name)) });
+    list.push({ slug: d.name, title: o.title || croTitle(d.name) || (t && t[1].trim()) || titleCase(d.name), desc: o.desc || "", updated: gitDate(path.join(PAGES, d.name)) });
     console.log(`copied /${d.name}/ (hand-built)`);
   }
 }

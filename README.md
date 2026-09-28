@@ -9,7 +9,7 @@ anyone with a link can view it, but search engines stay out.
 In Claude Design, commit the page to this repo at:
 
 ```
-_exports/<slug>.html        e.g. _exports/pdp-bundle-builder.html
+_exports/cro-<number>-<name>.html        e.g. _exports/cro-017-shop-by-scent.html
 ```
 
 That's it. Vercel deploys on every commit and runs `tools/build.mjs`, which turns the export into a lean page at
@@ -17,11 +17,13 @@ That's it. Vercel deploys on every commit and runs `tools/build.mjs`, which turn
 revision. Git keeps every old version.
 
 - Slug = file name: lowercase letters, numbers, dashes. Files starting with `_` are ignored (use for drafts).
-- The index title comes from the Claude Design screen name. Override it, add a description, or hide a page in
-  `mockups.json`:
+- The index title comes from the file name: `cro-017-shop-by-scent.html` becomes **CRO-017 | Shop by Scent**
+  (small words like "by" stay lowercase; PDP, PLP, CTA, FAQ, UGC are capitalised). Files without a `cro-<number>-`
+  prefix fall back to the Claude Design screen name.
+- Override the title, add a description, or hide a page in `mockups.json`:
 
   ```json
-  { "pdp-bundle-builder": { "title": "PDP Bundle Builder", "desc": "One line for the index", "hidden": false } }
+  { "cro-017-shop-by-scent": { "title": "CRO-017 | Shop by Scent", "desc": "One line for the index", "hidden": false } }
   ```
 
 ## What the build does
