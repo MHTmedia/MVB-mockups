@@ -25,8 +25,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = path.join(ROOT, "public");
 const EXPORTS = path.join(ROOT, "_exports");
 const PAGES = path.join(ROOT, "pages");
-const SITE_NAME = "MVB Mockups";
-const SITE_SUB = "Mad Viking Beard Co. design mockups by MHT Media. Work in progress, not the live store.";
+const SITE_NAME = "MVB CRO Mockups";
 // <style> sections that start with this comment header are design-system CSS
 const DS_HEADER = /\/\*\s*Mad Viking Beard Co\.\s*[—\-:]/g;
 const SHARED_IMG_MAX = 150_000;
@@ -153,12 +152,24 @@ function croTitle(slug) {
   return m ? `CRO-${m[1]} | ${titleCase(m[2])}` : null;
 }
 
+// 2026-09-28 -> "Sep 28, 2026"
+function prettyDate(d) {
+  const t = Date.parse(d + "T00:00:00Z");
+  return isNaN(t) ? "" : new Date(t).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
+}
+
+// Layout from the Claude Design export at _exports/_index-design.html
 function renderIndex(list) {
-  const cards = list.map((r) => `      <a class="card" href="${r.slug}/">
-        <span class="t">${esc(r.title)}</span>
-        ${r.desc ? `<span class="d">${esc(r.desc)}</span>` : ""}
-        <span class="m">${r.updated ? "Updated " + r.updated : ""}</span>
-      </a>`).join("\n");
+  const rows = list.map((r) => {
+    const m = r.title.match(/^(CRO-\d+)\s*\|\s*(.+)$/);
+    const [num, name] = m ? [m[1], m[2]] : ["", r.title];
+    return `      <a class="row" href="${r.slug}/">
+        <span class="num">${esc(num)}</span>
+        <span class="name">${esc(name)}${r.desc ? `<span class="desc">${esc(r.desc)}</span>` : ""}</span>
+        <span class="date">${r.updated ? "Updated " + prettyDate(r.updated) : ""}</span>
+        <span class="view">View →</span>
+      </a>`;
+  }).join("\n");
   return `<!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="utf-8">
@@ -167,25 +178,37 @@ function renderIndex(list) {
 <title>${esc(SITE_NAME)}</title>
 <link rel="stylesheet" href="_shared/mvb.css">
 <style>
-  body { margin: 0; background: var(--surface-page, #000); color: var(--text-primary, #fff); font-family: var(--font-body, sans-serif); }
-  main { max-width: 960px; margin: 0 auto; padding: 64px 16px 96px; }
-  h1 { margin: 0 0 8px; }
-  .sub { margin: 0 0 40px; color: var(--text-muted, #999); font-size: 14px; letter-spacing: .03em; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 16px; }
-  .card { display: flex; flex-direction: column; gap: 8px; padding: 22px; border: var(--border-hairline, 1px solid #2b2a27);
-          background: var(--surface-raised, #171717); color: inherit; text-decoration: none; transition: border-color .15s; }
-  .card:hover { border-color: var(--accent, #b30000); }
-  .t { font-family: var(--font-display, sans-serif); font-size: 20px; letter-spacing: .12em; text-transform: uppercase; }
-  .d { font-size: 13.5px; line-height: 1.6; color: var(--text-dim, #d4d4d4); }
-  .m { margin-top: auto; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--text-muted, #999); }
+  body { margin: 0; background: #000; color: #fff; font-family: 'Inter', sans-serif; }
+  main { max-width: 960px; margin: 0 auto; padding: 75px 40px; display: flex; flex-direction: column; gap: 50px; }
+  header { display: flex; flex-direction: column; gap: 12px; align-items: center; text-align: center; }
+  .eyebrow { font-size: 11px; letter-spacing: .36em; text-transform: uppercase; color: #999; }
+  h1 { margin: 0; font-family: 'Fjalla One', sans-serif; font-weight: 400; font-size: 40px; letter-spacing: .15em; text-transform: uppercase; }
+  .list { display: flex; flex-direction: column; border-top: 1px solid #2b2a27; }
+  .row { display: grid; grid-template-columns: 110px minmax(0, 1fr) auto auto; gap: 24px; align-items: center;
+         padding: 24px 0; border-bottom: 1px solid #2b2a27; color: #fff; text-decoration: none; }
+  .row:hover, .row:hover .view { color: #b30000; }
+  .num { font-family: 'Fjalla One', sans-serif; font-size: 16px; letter-spacing: .15em; color: #b30000; }
+  .name { font-family: 'Fjalla One', sans-serif; font-size: 20px; letter-spacing: .15em; text-transform: uppercase; }
+  .desc { display: block; margin-top: 6px; font-family: 'Inter', sans-serif; font-size: 13px; letter-spacing: 0; text-transform: none; line-height: 1.5; color: #999; }
+  .date { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: #999; }
+  .view { font-size: 12px; letter-spacing: .36em; text-transform: uppercase; color: #fff; }
+  @media (max-width: 720px) {
+    main { padding: 56px 16px; gap: 36px; }
+    h1 { font-size: 30px; }
+    .row { grid-template-columns: minmax(0, 1fr) auto; gap: 8px 16px; padding: 20px 0; }
+    .num, .name { grid-column: 1 / -1; }
+    .name { font-size: 18px; }
+  }
 </style>
 </head>
 <body>
   <main>
-    <h1 class="mv-display">${esc(SITE_NAME)}</h1>
-    <p class="sub">${esc(SITE_SUB)}</p>
-    <div class="grid">
-${cards}
+    <header>
+      <div class="eyebrow">Mad Viking Beard Co.</div>
+      <h1>CRO Mockups</h1>
+    </header>
+    <div class="list">
+${rows}
     </div>
   </main>
 </body></html>
