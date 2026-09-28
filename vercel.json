@@ -1,4 +1,8 @@
 {
+  "buildCommand": "node tools/build.mjs",
+  "outputDirectory": "public",
+  "installCommand": "",
+  "framework": null,
   "trailingSlash": true,
   "headers": [
     {

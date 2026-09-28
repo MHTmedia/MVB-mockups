@@ -1,40 +1,39 @@
 # MVB Mockups
 
 Public design mockups for Mad Viking Beard Co., built in Claude Design by MHT Media.
-Each mockup lives in its own folder and is served at `https://<vercel-domain>/<folder>/`.
-The root URL lists every mockup. All pages are `noindex` (meta tag, header and robots.txt), so links work for the client but search engines stay out.
-
-## Structure
-
-```
-_shared/            Used by every mockup. Don't hand-edit JS or font files.
-  mvb.css           MVB design system: fonts, color/type/spacing tokens, .mv-btn etc.
-  fonts/  js/  img/ Content-hashed files, safe to cache forever, never duplicated.
-shop-by-scent/      One folder per mockup: index.html + images/
-tools/add-mockup.py Turns a Claude Design export into a mockup folder.
-_exports/           Drop raw Claude Design exports here. Git-ignored (they are 5-10 MB each).
-mockups.json        Registry that drives the root index.html (written by the script).
-```
+Live at https://mvb-mockups.vercel.app/ (the root lists every mockup). Everything is `noindex`:
+anyone with a link can view it, but search engines stay out.
 
 ## Add or update a mockup
 
-1. In Claude Design, export the page as a standalone HTML file and save it to `_exports/`.
-2. From the repo root run:
+In Claude Design, commit the page to this repo at:
 
-   ```
-   python3 tools/add-mockup.py _exports/<file>.html <folder-name> --title "Page Name" --desc "One line for the index"
-   ```
+```
+_exports/<slug>.html        e.g. _exports/pdp-bundle-builder.html
+```
 
-   Same folder name again = replaces that mockup with the new revision.
-3. Commit and push. Vercel deploys automatically.
+That's it. Vercel deploys on every commit and runs `tools/build.mjs`, which turns the export into a lean page at
+`https://mvb-mockups.vercel.app/<slug>/` and adds it to the index. Committing to the same path again publishes a new
+revision. Git keeps every old version.
 
-Or just tell Claude in the Mad Viking Beard project: "add `_exports/<file>.html` as `<folder-name>`".
+- Slug = file name: lowercase letters, numbers, dashes. Files starting with `_` are ignored (use for drafts).
+- The index title comes from the Claude Design screen name. Override it, add a description, or hide a page in
+  `mockups.json`:
 
-## Notes
+  ```json
+  { "pdp-bundle-builder": { "title": "PDP Bundle Builder", "desc": "One line for the index", "hidden": false } }
+  ```
 
-- The script pulls the shared design-system CSS out of each export. If a newer export ships different
-  tokens, it keeps the existing `_shared/mvb.css` (so older mockups don't shift), links the page to a
-  versioned copy, and warns you. Add `--update-css` to promote the new CSS to all pages.
-- Folder names: lowercase, numbers, dashes (e.g. `pdp-bundle-builder`). Folders starting with `_` are reserved.
-- Pages need the trailing slash (`/shop-by-scent/`); `vercel.json` adds it automatically.
-- Local preview: `python3 -m http.server` in the repo root, then open http://localhost:8000/.
+## What the build does
+
+```
+_exports/*.html   ->  public/<slug>/index.html + images/   (~20 KB page instead of ~6 MB)
+                      public/_shared/fonts|js|img/          content-hashed, shared by all pages
+                      public/_shared/mvb.<hash>.css         exact design-system CSS each export shipped with
+                      public/_shared/mvb.css                latest design-system CSS (for hand-built pages)
+                      public/index.html                     the listing
+pages/<slug>/     ->  copied as-is (optional hand-built pages; link ../_shared/mvb.css)
+```
+
+`public/` is generated at deploy time and never committed. Local preview: `node tools/build.mjs`, then
+`npx serve public` or `python3 -m http.server -d public`.
