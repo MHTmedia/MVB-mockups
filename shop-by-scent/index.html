@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shop by Scent | MVB Mockups</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="../_shared/mvb.css">
+<script>window.__resources = {"scent-axe-oak": "images/scent-axe-oak.jpg", "scent-odins-rok": "images/scent-odins-rok.jpg", "scent-hammer-throne": "images/scent-hammer-throne.jpg", "scent-drengr": "images/scent-drengr.jpg", "scent-kalla": "images/scent-kalla.jpg", "scent-fjord": "images/scent-fjord.jpg", "scent-mjolnir": "images/scent-mjolnir.jpg", "scent-dragonshead": "images/scent-dragonshead.jpg", "scent-yggdrasil": "images/scent-yggdrasil.jpg", "scent-fenrir": "images/scent-fenrir.jpg", "scent-ingen-doft": "images/scent-ingen-doft.jpg", "scent-valhalla": "images/scent-valhalla.jpg", "scent-berserker": "images/scent-berserker.jpg", "https://unpkg.com/react@18.3.1/umd/react.production.min.js": "../_shared/js/react.production.min.aa77ae4c.js", "https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js": "../_shared/js/react-dom.production.min.feb8ddc9.js"};</script>
+
+<script src="../_shared/js/dc-runtime.2e38395c.js"></script>
+</head>
+<body>
+
+<x-dc>
+<helmet>
+  <script src="../_shared/js/mvb-design-system.94479e10.js"></script>
+  <style>
+    html, body { margin: 0; background: #141414; }
+    a { color: #fff; text-decoration: none; }
+    a:hover { color: #fff; opacity: .75; }
+  </style>
+</helmet>
+<div style="min-height: 100vh; background: #141414; display: flex; flex-direction: column; align-items: center;">
+  <div data-screen-label="Shop by Scent" style="width: {{ frameW }}; max-width: 100%; margin: {{ frameMargin }}; background: #000; color: #fff; container-type: inline-size; outline: {{ frameOutline }}; box-sizing: border-box;">
+
+    <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+      
+    </sc-if>
+
+    <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+      <header style="position: sticky; top: 0; z-index: 50; background: #000; border-bottom: 1px solid #2B2A27;">
+        <div style="display: grid; grid-template-columns: 44px 1fr 44px; align-items: center; height: 64px; padding: 0 12px;">
+          <button sc-camel-on-click="{{ toggleMenu }}" aria-label="Menu" style="width: 44px; height: 44px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; background: transparent; border: none; cursor: pointer; padding: 0;">
+            <span style="width: 22px; height: 1.5px; background: #fff;"></span>
+            <span style="width: 22px; height: 1.5px; background: #fff;"></span>
+            <span style="width: 22px; height: 1.5px; background: #fff;"></span>
+          </button>
+          <a href="#" style="justify-self: center; display: flex;"><img src="../_shared/img/853fe5b816.png" alt="Mad Viking Beard Co." style="width: 48px; height: 53px; display: block;"></a>
+          <a href="#" aria-label="Cart" style="position: relative; display: flex; width: 44px; height: 44px; align-items: center; justify-content: center;"><img src="../_shared/img/ff1ce64231.svg" alt="" style="width: 24px; height: 24px;"><span style="position: absolute; top: 8px; right: 7px; width: 7px; height: 7px; border-radius: 50%; background: #B30000;"></span></a>
+        </div>
+        <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+          <nav style="display: flex; flex-direction: column; border-top: 1px solid #2B2A27; padding: 8px 0 16px;">
+            <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="7">
+              <a href="#" style="display: flex; align-items: center; justify-content: space-between; height: 48px; padding: 0 20px; font-family: var(--font-display); font-size: 16px; letter-spacing: 0.15em; text-transform: uppercase; color: #fff;">{{ n }}<span style="color: #999;">›</span></a>
+            </sc-for>
+          </nav>
+        </sc-if>
+      </header>
+    </sc-if>
+
+    <main style="padding: clamp(40px, 6cqi, 72px) clamp(16px, 2.8cqi, 40px) clamp(56px, 7cqi, 96px);">
+      <div style="text-align: center; max-width: 820px; margin: 0 auto clamp(28px, 4cqi, 44px);">
+        <h1 style="margin: 0; font-family: var(--font-display); font-weight: 400; font-size: clamp(32px, 3.2cqi, 45px); line-height: 1.1; letter-spacing: 0.15em; text-transform: uppercase;" data-comment-anchor="e97f6a6aac-h1">Shop By Scent</h1>
+        <p style="margin: 16px auto 0; max-width: 640px; font-family: var(--font-body); font-size: clamp(14px, 1.4cqi, 17px); line-height: 1.6; letter-spacing: 0.02em; color: #D4D4D4; text-wrap: pretty;">We offer 12 different scents plus an unscented option, available in most of our beard care, body care and hair products.</p>
+      </div>
+
+      <sc-if value="{{ showFilters }}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; flex-wrap: {{ chipWrap }}; justify-content: {{ chipJustify }}; gap: 8px; overflow-x: auto; margin: 0 {{ chipBleed }} clamp(24px, 3.5cqi, 40px); padding: 0 {{ chipPad }} 4px; scrollbar-width: none;">
+          <sc-for list="{{ families }}" as="f" hint-placeholder-count="7">
+            <button sc-camel-on-click="{{ f.pick }}" style="flex-shrink: 0; height: 40px; padding: 0 18px; border: 1px solid {{ f.border }}; background: {{ f.bg }}; color: #fff; cursor: pointer; font-family: var(--font-display); font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; display: flex; align-items: center; gap: 8px;">{{ f.label }}<span style="font-family: var(--font-body); font-size: 11px; letter-spacing: 0; color: {{ f.countColor }};">{{ f.count }}</span></button>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr)); gap: clamp(14px, 1.4cqi, 20px); max-width: 1400px; margin: 0 auto;">
+        <sc-for list="{{ list }}" as="s" hint-placeholder-count="8">
+          <article style="display: flex; flex-direction: column; min-width: 0; background: #0b0b0b; border: 1px solid #2B2A27; transition: border-color .2s ease;" style-hover="border-color: #5a5852;">
+            <div style="position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: #111;">
+              <img src="{{ s.img }}" alt="{{ s.alt }}" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; object-position: {{ s.pos }}; display: block;">
+              <div style="position: absolute; inset: auto 0 0 0; height: 40%; background: linear-gradient(to top, #0b0b0b, rgba(11,11,11,0));"></div>
+              <sc-if value="{{ s.badge }}" hint-placeholder-val="{{ false }}">
+                <span style="position: absolute; top: 12px; left: 12px; padding: 4px 10px; background: #B30000; font-family: var(--font-body); font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #fff;">{{ s.badge }}</span>
+              </sc-if>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 14px; padding: 4px 20px 20px; flex: 1;">
+              <div>
+                <h2 style="margin: 0; font-family: var(--font-display); font-weight: 400; font-size: 28px; line-height: 1.1; letter-spacing: 0.08em; text-transform: uppercase;">{{ s.name }}</h2>
+                <p style="margin: 6px 0 0; font-family: var(--font-body); font-size: 13px; letter-spacing: 0.03em; color: #999;">{{ s.notes }}</p>
+              </div>
+              <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                <sc-for list="{{ s.tagList }}" as="t" hint-placeholder-count="3">
+                  <span style="padding: 5px 12px; background: {{ t.color }}; font-family: var(--font-display); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #fff;">{{ t.label }}</span>
+                </sc-for>
+              </div>
+              <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid #2B2A27; border-bottom: 1px solid #2B2A27; padding: 12px 0;">
+                <sc-for list="{{ s.occList }}" as="o" hint-placeholder-count="3">
+                  <div style="display: flex; flex-direction: column; align-items: center; gap: 7px;">
+                    <svg sc-camel-view-box="0 0 24 24" width="24" height="24" fill="none" stroke="#fff" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="{{ o.path }}"></path></svg>
+                    <span style="font-family: var(--font-display); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #D4D4D4; text-align: center;">{{ o.label }}</span>
+                  </div>
+                </sc-for>
+              </div>
+              <p style="margin: 0; flex: 1; font-family: var(--font-body); font-size: 13.8px; line-height: 1.65; letter-spacing: 0.02em; color: #D4D4D4; text-wrap: pretty;">{{ s.desc }}</p>
+              <a href="{{ s.url }}" style="display: flex; align-items: center; justify-content: center; gap: 10px; height: 46px; background: #B30000; border: 1px solid #B30000; color: #fff; font-family: var(--font-display); font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase; transition: background-color .15s ease, border-color .15s ease;" style-hover="background: #8F0000; border-color: #8F0000; opacity: 1; color: #fff;">Shop {{ s.name }}<span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+
+      <sc-if value="{{ empty }}" hint-placeholder-val="{{ false }}">
+        <p style="text-align: center; font-family: var(--font-body); font-size: 14px; color: #999; margin: 40px 0 0;">No scents in this family yet.</p>
+      </sc-if>
+
+      <sc-if value="{{ hasMore }}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; justify-content: center; margin-top: clamp(36px, 4cqi, 52px);">
+          <x-import component-from-global-scope="MVBDesignSystem_0cf631.Button" size="lg" sc-camel-on-click="{{ toggleAll }}" style="{{ exploreStyle }}" hint-size="260px,44px">{{ moreLabel }}</x-import>
+        </div>
+      </sc-if>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{&quot;view&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;Desktop&quot;, &quot;Mobile&quot;], &quot;default&quot;: &quot;Desktop&quot;, &quot;tsType&quot;: &quot;string&quot;}, &quot;showFilters&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;}, &quot;initialCount&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;4&quot;, &quot;8&quot;, &quot;12&quot;, &quot;16&quot;], &quot;default&quot;: &quot;8&quot;, &quot;tsType&quot;: &quot;string&quot;}}">
+const FAM = {
+  woody: "oklch(0.36 0.06 55)", warm: "oklch(0.38 0.08 45)", spiced: "oklch(0.40 0.10 40)",
+  fresh: "oklch(0.38 0.08 150)", citrus: "oklch(0.42 0.09 125)", light: "oklch(0.40 0.06 160)",
+  spicy: "oklch(0.36 0.12 25)", rich: "oklch(0.33 0.10 20)", bold: "oklch(0.40 0.16 27)",
+  cool: "oklch(0.38 0.06 235)", aromatic: "oklch(0.40 0.06 220)", clean: "oklch(0.40 0.04 230)",
+  sweet: "oklch(0.34 0.10 10)", smooth: "oklch(0.35 0.07 300)", smoky: "oklch(0.32 0.03 60)",
+  neutral: "oklch(0.36 0 0)",
+};
+const P = {
+  tree: "M12 3l5 6h-3l4 5h-3l3 4H6l3-4H6l4-5H7zM12 18v3",
+  moon: "M16 4a8 8 0 1 0 4 12 7 7 0 0 1-4-12z",
+  heart: "M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z",
+  sun: "M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2",
+  mountain: "M2 20l7-11 4 6 3-4 6 9z",
+  flame: "M12 3c1 4 5 6 5 11a5 5 0 0 1-10 0c0-3 2-4 2-7 2 1 3 3 3 5",
+  glass: "M7 3h10l-1 8a4 4 0 0 1-8 0zM12 15v5M8 21h8",
+  leaf: "M5 19C5 10 11 5 20 4c-1 9-6 15-15 15zM5 19l8-8",
+  crown: "M3 8l4 4 5-7 5 7 4-4-2 11H5z",
+  snow: "M12 2v20M3 7l18 10M21 7L3 17",
+  axe: "M6 21L17 6M14 3c3 0 6 3 6 6l-4 1-3-3z",
+  drop: "M12 3c3 5 6 8 6 12a6 6 0 0 1-12 0c0-4 3-7 6-12z",
+};
+const OCC = {
+  outdoor: ["tree", "Outdoor"], evening: ["moon", "Evening"], date: ["heart", "Date Night"],
+  everyday: ["sun", "Everyday"], adventure: ["mountain", "Adventure"], fireside: ["flame", "Fireside"],
+  night: ["glass", "Night Out"], casual: ["leaf", "Casual"], signature: ["crown", "Signature"],
+  cold: ["snow", "Cold Weather"], work: ["axe", "Workday"], sensitive: ["drop", "Sensitive Skin"],
+  warmwx: ["sun", "Warm Weather"],
+};
+const SCENTS = [
+  ["axe-oak", "Axe & Oak", "Oud Wood • Sandalwood • Amber • Vanilla", ["woody", "warm", "spiced"], ["outdoor", "evening", "date"], "Oud wood and smooth sandalwood lead, edged with eastern spices. Amber, vanilla and deep rosewood warm the finish — rugged and refined.", "Best Seller"],
+  ["berserker", "Berserker", "Pineapple • Bergamot • Oakmoss • Ambergris", ["citrus", "woody", "bold"], ["work", "outdoor", "everyday"], "Bright pineapple and bergamot over earthy oakmoss, patchouli and cedarwood, finished with ambergris. Modern and confident."],
+  ["dragonshead", "Dragonshead", "Coconut • Lime", ["fresh", "citrus", "light"], ["warmwx", "everyday", "casual"], "An airy, tropical summer scent — smooth coconut lifted by a crisp top note of lime."],
+  ["drengr", "Drengr", "Citrus • Mint • Vetiver • Cedarwood", ["fresh", "aromatic", "woody"], ["everyday", "work", "night"], "Shaped by ice, wind and wood. Crisp citrus and mint give way to vetiver and amber, grounded by oakmoss, cedarwood, ambroxan and musk."],
+  ["fenrir", "Fenrir", "Pink Pepper • Rum • Bourbon • Tobacco", ["spicy", "rich", "bold"], ["evening", "night", "date"], "Pink pepper and neroli open into rum and bourbon, settling on tobacco leaf, vanilla bean and styrax — like a private humidor and aged oak."],
+  ["fjord", "Fjord", "Mint • Lavender • Orange Blossom • Cedarwood • Sandalwood", ["cool", "aromatic", "clean"], ["outdoor", "everyday", "work"], "A clean, classic cologne. Mint, lavender and orange blossom over cedarwood and sandalwood — office by day, out on the town at night."],
+  ["hammer-throne", "Hammer & Throne", "Pine Resin • Birch • Guaiac Wood • Smoky Sandalwood", ["woody", "smoky", "rich"], ["fireside", "cold", "evening"], "Straight into the forest. Pine resin and birch open sharp and natural, guaiac wood and a thread of smoky sandalwood add depth to anchor it all."],
+  ["kalla", "Kalla", "Melon • Cucumber • Grapefruit • Oak", ["fresh", "clean", "light"], ["everyday", "warmwx", "work"], "Named for a cold, clear Nordic spring. Melon and cucumber open crisp, grapefruit and lily of the valley lift it, oak and musk give it quiet structure.", "New Scent"],
+  ["mjolnir", "Mjolnir", "Peppermint • Cedarwood • Sandalwood", ["woody", "fresh", "cool"], ["outdoor", "everyday", "work"], "A cool hit of peppermint that wakes the senses, then mellows into woodsy cedarwood and sandalwood that last all day."],
+  ["odins-rok", "Odin's Rok", "Black Cherry • Pipe Tobacco • Benzoin", ["sweet", "aromatic", "warm"], ["fireside", "evening", "cold"], "Tobacco before the flame. Bright black cherry melts into sweet cherry pipe tobacco and warm benzoin, like your grandfather's favorite pipe fresh from the pouch."],
+  ["valhalla", "Valhalla", "Sandalwood • Vanilla", ["woody", "smooth", "warm"], ["signature", "cold", "everyday"], "Exotic sandalwoods with a top note of vanilla — a smooth, silky scent that has earned its best-seller status.", "Best Seller"],
+  ["ingen-doft", "Ingen Doft", "Unscented", ["neutral", "clean", "light"], ["sensitive", "everyday", "work"], "Our scentless choice. No essential oils or fragrances added."],
+  ["yggdrasil", "Yggdrasil", "Nordic Mountain Pine • Light Citrus", ["fresh", "woody", "citrus"], ["outdoor", "everyday", "adventure"], "Heavy Nordic mountain pine with a light, crisp citrus note. Woodsy and refreshing."],
+].map(([slug, name, notes, tags, occ, desc, badge]) => ({ slug, name, notes, tags, occ, desc, badge }));
+const FAMILIES = [
+  ["all", "All", null],
+  ["woody", "Woody", ["woody"]],
+  ["fresh", "Fresh", ["fresh", "cool", "aromatic", "clean", "light"]],
+  ["citrus", "Citrus", ["citrus"]],
+  ["spicy", "Spiced", ["spicy", "spiced", "rich", "bold"]],
+  ["sweet", "Sweet", ["sweet", "smooth"]],
+  ["smoky", "Warm & Smoky", ["smoky", "warm"]],
+  ["unscented", "Unscented", ["neutral"]],
+];
+const V2 = ["axe-oak", "dragonshead", "fenrir", "fjord", "the-orchard", "yggdrasil", "the-hollow", "valhalla"];
+const NAV = ["Bundles", "Beard Care", "Body", "Hair", "Grooming Tools", "Gear", "Scents"];
+
+class Component extends DCLogic {
+  state = { fam: "all", all: false, menu: false };
+  renderVals() {
+    const mobile = (this.props.view ?? "Desktop") === "Mobile";
+    const showFilters = this.props.showFilters ?? true;
+    const initial = Number(this.props.initialCount ?? 8);
+    const famDef = FAMILIES.find((f) => f[0] === this.state.fam) || FAMILIES[0];
+    const match = (s, def) => !def[2] || s.tags.some((t) => def[2].includes(t));
+    const filtered = SCENTS.filter((s) => match(s, famDef));
+    const isAll = this.state.fam === "all";
+    const visible = filtered;
+    return {
+      isMobile: mobile, isDesktop: !mobile,
+      frameW: mobile ? "414px" : "100%", frameMargin: mobile ? "24px auto 48px" : "0",
+      frameOutline: mobile ? "1px solid #2B2A27" : "none",
+      menuOpen: this.state.menu, toggleMenu: () => this.setState((s) => ({ menu: !s.menu })), navItems: NAV,
+      showFilters,
+      chipWrap: mobile ? "nowrap" : "wrap", chipJustify: mobile ? "flex-start" : "center",
+      chipBleed: mobile ? "-16px" : "0", chipPad: mobile ? "16px" : "0",
+      families: FAMILIES.map((f) => {
+        const on = f[0] === this.state.fam;
+        return {
+          label: f[1], count: SCENTS.filter((s) => match(s, f)).length,
+          bg: on ? "#B30000" : "transparent", border: on ? "#B30000" : "#2B2A27",
+          countColor: on ? "#fff" : "#999",
+          pick: () => this.setState({ fam: f[0], all: false }),
+        };
+      }),
+      list: visible.map((s) => ({
+        name: s.name, url: "https://madvikingbeard.com/" + (s.slug === "kalla" ? "products/kalla-eau-de-parfum" : "collections/" + (s.slug === "ingen-doft" ? "ingen-doft-scent-free" : s.slug) + (s.slug === "ingen-doft" ? "-products" : "-scented-products")), notes: s.notes, desc: s.desc, badge: s.badge || false,
+        img: (window.__resources && window.__resources["scent-" + s.slug]) || ("images/scents/" + s.slug + (s.slug === "ingen-doft" ? "-beach.jpg" : "-ing.jpg")), alt: s.name + " scent mood image", pos: ["fjord", "kalla", "odins-rok"].includes(s.slug) ? "50% 85%" : "50% 50%",
+        tagList: s.tags.map((t) => ({ label: t === "neutral" ? "Unscented" : t, color: FAM[t] })),
+        occList: s.occ.map((o) => ({ path: P[OCC[o][0]], label: OCC[o][1] })),
+      })),
+      empty: visible.length === 0,
+      hasMore: false,
+      moreLabel: this.state.all ? "Show fewer scents ↑" : "Explore all 12 scents →",
+      exploreStyle: { minWidth: mobile ? 280 : 300 },
+      toggleAll: () => this.setState((s) => ({ all: !s.all })),
+    };
+  }
+}
+</script>
+
+</body></html>
